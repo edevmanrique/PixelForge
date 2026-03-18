@@ -56,7 +56,7 @@ def register():
         username = request.form["username"]
         email = request.form["email"]
         password = request.form["password"]
-
+        
         # Convertir fecha
         fecha_nacimiento = datetime.strptime(
             request.form["fecha_nacimiento"], "%Y-%m-%d"

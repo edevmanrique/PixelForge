@@ -1,25 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>¿Qué jugaste hoy?</h2>
-<div class="games-grid">
-  {% for game in games %}
-    <a href="{{ url_for('game', game_id=game.id) }}" class="rawg-card">
 
+<div class="search-wrapper">
+  <div class="search-box">
+    <span class="search-icon">⌕</span>
+    <input
+      type="text"
+      id="searchInput"
+      class="search-input"
+      placeholder="Buscar juego..."
+      autocomplete="off"
+    >
+    <button class="search-clear" id="clearBtn" aria-label="Limpiar">✕</button>
+  </div>
+  <p class="search-count" id="searchCount"></p>
+</div>
+<h2>¿Qué jugaste hoy?</h2>
+<div class="games-grid" id="gamesGrid">
+  {% for game in games %}
+    <a href="{{ url_for('game', game_id=game.id) }}" class="rawg-card" data-name="{{ game.name | lower }}">
       <div class="rawg-image">
         <img src="{{ game.background_image }}" alt="{{ game.name }}">
       </div>
-
       <div class="rawg-content">
         <h3>{{ game.name }}</h3>
-
         {% if game.pf_rating or game.rating %}
-          <span class="rawg-rating">
-            ⭐ {{ game.pf_rating or game.rating }}
-          </span>
+          <span class="rawg-rating">⭐ {{ game.pf_rating or game.rating }}</span>
         {% endif %}
       </div>
-
     </a>
   {% endfor %}
 </div>
+
+<p class="no-results" id="noResults" style="display:none;">
+  No se encontraron juegos para "<span id="noResultsQuery"></span>"
+</p>
+
+<script src="../static/script.js"></script>
+
 {% endblock %}
